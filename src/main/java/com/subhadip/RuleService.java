@@ -3,7 +3,7 @@ package com.subhadip;
 import java.util.Map;
 
 import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.StatelessKieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +18,8 @@ public class RuleService {
 	}
 
 	public Map<String, String> find(Map<String, String> attributes) {
-		KieSession kieSession = kieContainer.newKieSession("rulesSession");
-		kieSession.insert(attributes);
-		kieSession.fireAllRules();
-		kieSession.dispose();
+		StatelessKieSession kieSession = kieContainer.newStatelessKieSession();
+		kieSession.execute(attributes);
 		return attributes;
 	}
 }
