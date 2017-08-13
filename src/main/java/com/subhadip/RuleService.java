@@ -1,26 +1,27 @@
 package com.subhadip;
 
+import java.util.Map;
+
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DiscountService {
+public class RuleService {
 
 	private final KieContainer kieContainer;
 
 	@Autowired
-	public DiscountService(KieContainer kieContainer) {
+	public RuleService(KieContainer kieContainer) {
 		this.kieContainer = kieContainer;
 	}
 
-	public Product getProductDiscount(Product product) {
-		//get the stateful session
+	public Map<String, String> find(Map<String, String> attributes) {
 		KieSession kieSession = kieContainer.newKieSession("rulesSession");
-		kieSession.insert(product);
+		kieSession.insert(attributes);
 		kieSession.fireAllRules();
 		kieSession.dispose();
-		return product;
+		return attributes;
 	}
 }
