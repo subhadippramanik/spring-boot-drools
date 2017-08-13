@@ -2,11 +2,19 @@ package rules
 
 global java.util.Map map;
 	
-rule "Unit"
+rule "Unit Temperature"
 when
-    $map: Map(this.containsKey("bacnet:unit"))
+    $map: Map(this["bacnet:unit"] == "c" 
+    		|| this["bacnet:unit"] == "f")
 then
 	$map.put("temperature", "m:");
+end
+
+rule "Unit RPM"
+when
+    $map: Map(this["bacnet:unit"] == "rpm")
+then
+	$map.put("fanspeed", "m:");
 end
 
 rule "Commandable"
