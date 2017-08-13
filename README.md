@@ -24,4 +24,4 @@ OUTPUT
     "cmd": "m:"
 }
 ```
-###### TODO: use .xls decision table instead of .drl
+###### TODO: decision table not working - returns false on condition check
